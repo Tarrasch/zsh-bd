@@ -12,6 +12,8 @@ All you need to do is to source `bd.zsh`. Here's the manual installation
     curl https://raw.github.com/Tarrasch/zsh-bd/master/bd.zsh > $HOME/.zsh/plugins/bd/bd.zsh
     print -- "\n# zsh-bd\n. \$HOME/.zsh/plugins/bd/bd.zsh" >> $HOME/.zshrc
 
+Restart your shell (or run `zsh`)
+
 ### [Antigen](https://github.com/zsh-users/antigen)
 
 If you prefer antigen over manual installation
@@ -25,6 +27,10 @@ If you prefer antigen over manual installation
     $ bd b
     $ ls
     c
+
+Here's an animation also showing the completion functionality
+
+![Animated gif](animation.gif "Animation that shows auto completion")
 
 ## Thanks
 
