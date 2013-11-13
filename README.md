@@ -1,5 +1,9 @@
 # zsh-bd
 
+Quickly go back to a specific parent directory instead of typing `cd ../../..` redundantly
+
+---
+
 This is a reimplementation of
 [vigneshwaranr/bd](https://github.com/vigneshwaranr/bd) that utilizes the power
 of the zsh shell.
