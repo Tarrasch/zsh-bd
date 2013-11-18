@@ -19,6 +19,9 @@ bd () {
 }
 
 _bd () {
-  reply=(${=PWD//\// })
+  temp=(${=PWD//\// })
+  for e in "${temp[@]}"; do
+    reply=("$e" "${reply[@]}")
+  done
 }
 compctl -V directories -K _bd bd
