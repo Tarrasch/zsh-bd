@@ -21,4 +21,4 @@ bd () {
 _bd () {
   reply=(${=PWD//\// })
 }
-compctl -K _bd bd
+compctl -V directories -K _bd bd
