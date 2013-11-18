@@ -3,7 +3,7 @@ bd () {
     print -- "usage: $0 <name-of-any-parent-directory>"
     return 1
   } >&2
-  parents=(${=PWD//\// })
+  parents=(/ ${=PWD//\// })
   dest="./"
   foreach parent (${(Oa)parents}) # Loop backwards
   do
@@ -19,7 +19,7 @@ bd () {
 }
 
 _bd () {
-  temp=(${=PWD//\// })
+  temp=(/ ${=PWD//\// })
   for e in "${temp[@]}"; do
     reply=("$e" "${reply[@]}")
   done
