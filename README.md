@@ -41,3 +41,6 @@ Here's an animation also showing the completion functionality
 Thanks to
 [@vigneshwaranr](https://github.com/vigneshwaranr)
 for inspiring me to do a zsh version.
+
+Thanks to [@voria](https://github.com/voria) for many useful
+patches! (see commit log)
