@@ -3,9 +3,17 @@ bd () {
     print -- "usage: $0 <name-of-any-parent-directory>"
     return 1
   } >&2
-  parents=(/ ${=PWD//\// })
+  # Get parents (in reverse order)
+  parents=()
+  num=`echo $PWD | grep -o "/" | wc -l`
+  for i in {$((num+1))..2}
+  do
+    parents=($parents "`echo $PWD | cut -d'/' -f$i`")
+  done
+  parents=($parents "/")
+  # Build dest and 'cd' to it
   dest="./"
-  foreach parent (${(Oa)parents}) # Loop backwards
+  foreach parent (${parents})
   do
     if [[ $1 == $parent ]]
     then
@@ -17,11 +25,13 @@ bd () {
   print -- "bd: Error: No parent directory named '$1'"
   return 1
 }
-
 _bd () {
-  temp=(/ ${=PWD//\// })
-  for e in "${temp[@]}"; do
-    reply=("$e" "${reply[@]}")
+  # Get parents (in reverse order)
+  num=`echo $PWD | grep -o "/" | wc -l`
+  for i in {$((num+1))..2}
+  do
+    reply=($reply "`echo $PWD | cut -d'/' -f$i`")
   done
+  reply=($reply "/")
 }
 compctl -V directories -K _bd bd
