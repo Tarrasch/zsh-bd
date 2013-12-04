@@ -4,18 +4,19 @@ bd () {
     return 1
   } >&2
   # Get parents (in reverse order)
-  parents=()
-  num=`echo $PWD | grep -o "/" | wc -l`
+  local parents
+  local num=`echo $PWD | grep -o "/" | wc -l`
+  local i
   for i in {$((num+1))..2}
   do
     parents=($parents "`echo $PWD | cut -d'/' -f$i`")
   done
   parents=($parents "/")
   # Build dest and 'cd' to it
-  dest="./"
-  foreach parent (${parents})
+  local dest="./"
+  foreach i (${parents})
   do
-    if [[ $1 == $parent ]]
+    if [[ $1 == $i ]]
     then
       cd $dest
       return 0
@@ -27,7 +28,8 @@ bd () {
 }
 _bd () {
   # Get parents (in reverse order)
-  num=`echo $PWD | grep -o "/" | wc -l`
+  local num=`echo $PWD | grep -o "/" | wc -l`
+  local i
   for i in {$((num+1))..2}
   do
     reply=($reply "`echo $PWD | cut -d'/' -f$i`")
