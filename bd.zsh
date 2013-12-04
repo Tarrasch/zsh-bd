@@ -14,9 +14,10 @@ bd () {
   parents=($parents "/")
   # Build dest and 'cd' to it
   local dest="./"
-  foreach i (${parents})
+  local parent
+  foreach parent (${parents})
   do
-    if [[ $1 == $i ]]
+    if [[ $1 == $parent ]]
     then
       cd $dest
       return 0
