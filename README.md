@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Tarrasch/zsh-bd.png)](https://travis-ci.org/Tarrasch/zsh-bd)
+
 # zsh-bd
 
 Quickly go back to a specific parent directory instead of typing `cd ../../..` redundantly
