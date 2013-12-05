@@ -5,7 +5,7 @@ bd () {
   } >&2
   # Get parents (in reverse order)
   local parents
-  local num=`echo $PWD | grep -o "/" | wc -l`
+  local num=${#${(ps:/:)${PWD}}}
   local i
   for i in {$((num+1))..2}
   do
@@ -29,7 +29,7 @@ bd () {
 }
 _bd () {
   # Get parents (in reverse order)
-  local num=`echo $PWD | grep -o "/" | wc -l`
+  local num=${#${(ps:/:)${PWD}}}
   local i
   for i in {$((num+1))..2}
   do
