@@ -9,7 +9,7 @@ bd () {
   local i
   for i in {$((num+1))..2}
   do
-    parents=($parents "`echo $PWD | cut -d'/' -f$i`")
+    parents=($parents "$(echo $PWD | cut -d'/' -f$i)")
   done
   parents=($parents "/")
   # Build dest and 'cd' to it
