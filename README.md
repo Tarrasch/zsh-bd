@@ -33,6 +33,10 @@ If you prefer antigen over manual installation
     $ bd b
     $ ls
     c
+    $ cd c/d
+    $ bd 2
+    $ ls
+    c
 
 Here's an animation also showing the completion functionality
 
