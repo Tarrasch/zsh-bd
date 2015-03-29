@@ -35,3 +35,13 @@ Lets also make sure we can jump beyond a 'space dir'
   $ bd a
   $ ls
   space dir
+
+If the provided argument is an integer, go up as many times as required.
+
+  $ cd 'space dir/f/g/h'
+  $ bd 1
+  $ ls
+  h
+  $ bd 2
+  $ ls
+  f
