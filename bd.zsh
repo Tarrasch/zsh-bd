@@ -4,13 +4,15 @@ bd () {
     print -- "       $0 <number-of-folders>"
     return 1
   } >&2
-  local num=${#${(ps:/:)${PWD}}}
+  # example:
+  #   $PWD == /home/arash/abc ==> $num_folders_we_are_in == 3
+  local num_folders_we_are_in=${#${(ps:/:)${PWD}}}
   local dest="./"
 
   # If the user provided an integer, go up as many times as asked
   if [[ "$1" = <-> ]]
   then
-    if [[ $1 -gt $num ]]
+    if [[ $1 -gt $num_folders_we_are_in ]]
     then
       print -- "bd: Error: Can not go up $1 times (not enough parent directories)"
       return 1
@@ -27,7 +29,7 @@ bd () {
   # Get parents (in reverse order)
   local parents
   local i
-  for i in {$((num+1))..2}
+  for i in {$((num_folders_we_are_in+1))..2}
   do
     parents=($parents "$(echo $PWD | cut -d'/' -f$i)")
   done
@@ -48,9 +50,9 @@ bd () {
 }
 _bd () {
   # Get parents (in reverse order)
-  local num=${#${(ps:/:)${PWD}}}
+  local num_folders_we_are_in=${#${(ps:/:)${PWD}}}
   local i
-  for i in {$((num+1))..2}
+  for i in {$((num_folders_we_are_in+1))..2}
   do
     reply=($reply "`echo $PWD | cut -d'/' -f$i`")
   done
