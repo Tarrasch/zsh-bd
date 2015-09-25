@@ -45,3 +45,19 @@ If the provided argument is an integer, go up as many times as required.
   $ bd 2
   $ ls
   f
+
+Make sure folders can be only numbers, and they are understood
+
+  $ mkdir -p ncpc/2015/whistles
+  $ cd ncpc/2015/whistles
+  $ bd 2015
+  $ ls
+  whistles
+
+Also document (with this test) the ambigious case
+
+  $ mkdir -p 1/2/3
+  $ cd 1/2/3
+  $ bd 1
+  $ ls
+  2
