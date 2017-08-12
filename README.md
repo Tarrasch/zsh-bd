@@ -2,7 +2,9 @@
 
 # zsh-bd
 
-Quickly go back to a specific parent directory instead of typing `cd ../../..` redundantly
+Quickly go back to a specific parent directory instead of typing `cd ../../..` redundantly.
+
+Update August 2017: While there have not been commits lately, it's still fully functional.
 
 ---
 
