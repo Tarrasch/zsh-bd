@@ -61,3 +61,11 @@ Also document (with this test) the ambigious case
   $ bd 1
   $ ls
   2
+
+Exclude current working directory from parent list
+
+  $ mkdir -p aaa/bbb/aaa/ccc
+  $ cd aaa/bbb/aaa
+  $ bd aaa
+  $ ls
+  bbb

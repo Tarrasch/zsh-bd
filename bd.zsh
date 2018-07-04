@@ -13,7 +13,7 @@ bd () {
   # Get parents (in reverse order)
   local parents
   local i
-  for i in {$((num_folders_we_are_in+1))..2}
+  for i in {$num_folders_we_are_in..2}
   do
     parents=($parents "$(echo $PWD | cut -d'/' -f$i)")
   done
@@ -22,12 +22,12 @@ bd () {
   local parent
   foreach parent (${parents})
   do
+    dest+="../"
     if [[ $1 == $parent ]]
     then
       cd $dest
       return 0
     fi
-    dest+="../"
   done
 
   # If the user provided an integer, go up as many times as asked
@@ -55,7 +55,7 @@ _bd () {
   # Get parents (in reverse order)
   local num_folders_we_are_in=${#${(ps:/:)${PWD}}}
   local i
-  for i in {$((num_folders_we_are_in+1))..2}
+  for i in {$num_folders_we_are_in..2}
   do
     reply=($reply "`echo $PWD | cut -d'/' -f$i`")
   done
