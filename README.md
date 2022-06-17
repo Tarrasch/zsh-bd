@@ -28,6 +28,14 @@ If you prefer antigen over manual installation
 
     antigen-bundle Tarrasch/zsh-bd
 
+### [Fig](https://fig.io)
+
+Fig adds apps, shortcuts, and autocomplete to your existing terminal.
+
+Install `zsh-bd` with Fig in just one click.
+
+<a href="https://fig.io/plugins/other/zsh-bd_Tarrasch" target="_blank"><img src="https://fig.io/badges/install-with-fig.svg" /></a>
+
 ## Usage
 
     $ mkdir -p a/b/c/d
