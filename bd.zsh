@@ -1,64 +1,88 @@
+# shellcheck shell=bash
 bd () {
   (($#<1)) && {
-    print -- "usage: $0 <name-of-any-parent-directory>"
-    print -- "       $0 <number-of-folders>"
+    printf -- 'usage: %s <name-of-any-parent-directory>\n' "${0}"
+    printf -- '       %s <number-of-folders>\n' "${0}"
+
     return 1
   } >&2
-  # example:
-  #   $PWD == /home/arash/abc ==> $num_folders_we_are_in == 3
-  local num_folders_we_are_in=${#${(ps:/:)${PWD}}}
-  local dest="./"
 
-  # First try to find a folder with matching name (could potentially be a number)
-  # Get parents (in reverse order)
-  local parents
+  local requestedDestination="${1}"
+  local -a parents=(${(ps:/:)"${PWD}"})
+  local numParents
+  local dest
   local i
-  for i in {$num_folders_we_are_in..2}
-  do
-    parents=($parents "$(echo $PWD | cut -d'/' -f$i)")
-  done
-  parents=($parents "/")
-  # Build dest and 'cd' to it
   local parent
-  foreach parent (${parents})
-  do
-    dest+="../"
-    if [[ $1 == $parent ]]
-    then
+
+  # prepend root to the parents array
+  parents=('/' "${parents[@]}")
+
+  # Remove the current directory since it isn't a parent
+  shift -p parents
+
+  # Get the number of parent directories
+  numParents="$(( ${#parents[@]}))"
+
+  # Build dest and 'cd' to it by looping over the parents array in reverse
+  dest='./'
+  for i in $(seq "${numParents}" -1 1); do
+    parent="${parents[${i}]}"
+    dest+='../'
+
+    if [[ "${requestedDestination}" == "${parent}" ]]; then
       cd $dest
-      return 0
+
+      return $?
     fi
   done
 
   # If the user provided an integer, go up as many times as asked
-  dest="./"
-  if [[ "$1" = <-> ]]
-  then
-    if [[ $1 -gt $num_folders_we_are_in ]]
-    then
-      print -- "bd: Error: Can not go up $1 times (not enough parent directories)"
+  dest='./'
+  if [[ "${requestedDestination}" == <-> ]]; then
+    if [[ "${requestedDestination}" -gt "${numParents}" ]]; then
+      printf -- '%s: Error: Can not go up %s times (not enough parent directories)\n' "${0}" "${requestedDestination}"
       return 1
     fi
-    for i in {1..$1}
-    do
-      dest+="../"
+
+    for i in {1.."${requestedDestination}"}; do
+      dest+='../'
     done
-    cd $dest
-    return 0
+
+    cd "${dest}"
+
+    return $?
   fi
 
   # If the above methods fail
-  print -- "bd: Error: No parent directory named '$1'"
+  printf -- '%s: Error: No parent directory named "%s"\n' "${0}" "${requestedDestination}"
   return 1
 }
+
 _bd () {
   # Get parents (in reverse order)
-  local num_folders_we_are_in=${#${(ps:/:)${PWD}}}
+  local localMatcherList
+  local -a parents=(${(ps:/:)"${PWD}"})
+  local numParents
   local i
-  for i in {$num_folders_we_are_in..2}
-  do
-    reply=($reply "`echo $PWD | cut -d'/' -f$i`")
+  local -a parentsReverse
+
+  zstyle -s ':completion:*' 'matcher-list' 'localMatcherList'
+
+  # prepend root to the parents array
+  parents=('/' "${parents[@]}")
+
+  # Remove the current directory since it isn't a parent
+  shift -p parents
+
+  # Get the number of parent directories
+  numParents="$(( ${#parents[@]}))"
+
+  parentsReverse=()
+  for i in $(seq "${numParents}" -1 1); do
+    parentsReverse+=("${parents[${i}]}")
   done
-  reply=($reply "/")
+
+  compadd -V 'Parent directories' -M "${localMatcherList}" "$@" -- "${parentsReverse[@]}"
 }
-compctl -V directories -K _bd bd
+
+compdef _bd bd
