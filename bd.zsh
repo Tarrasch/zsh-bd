@@ -82,7 +82,16 @@ _bd () {
     parentsReverse+=("${parents[${i}]}")
   done
 
-  compadd -V 'Parent directories' -M "${localMatcherList}" "$@" -- "${parentsReverse[@]}"
+  local expl
+  _wanted -V directories expl 'parent directories' \
+    compadd -M "${localMatcherList}" "$@" -- "${parentsReverse[@]}"
 }
 
 compdef _bd bd
+
+() {
+  local -a colors
+  zstyle -a ':completion:*' list-colors colors
+  local dir_color="${colors[(r)di=*]#di=}"
+  zstyle ':completion:*:*:bd:*:directories' list-colors "=*=${dir_color}"
+}
